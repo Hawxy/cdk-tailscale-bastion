@@ -1,4 +1,4 @@
-# aws-cdk-tailscale-bastion
+# cdk-tailscale-bastion
 
 This packages creates an AWS Bastion configured for Tailscale.
 
