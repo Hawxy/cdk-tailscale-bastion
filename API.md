@@ -199,7 +199,7 @@ public readonly instanceName: string;
 ```
 
 - *Type:* string
-- *Default:* 'BastionHost'
+- *Default:* 'BastionHostTailscale'
 
 The name of the instance.
 

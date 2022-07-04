@@ -26,7 +26,7 @@ test('Bastion host should be created', () => {
     Tags: [
       {
         Key: 'Name',
-        Value: 'BastionHost',
+        Value: 'BastionHostTailscale',
       },
     ],
   });
