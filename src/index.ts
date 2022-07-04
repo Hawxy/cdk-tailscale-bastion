@@ -21,7 +21,7 @@ export interface TailscaleBastionProps {
   /**
    * The name of the instance.
    *
-   * @default 'BastionHost'
+   * @default 'BastionHostTailscale'
    */
   readonly instanceName?: string;
   /**
@@ -56,7 +56,7 @@ export class TailscaleBastion extends Construct {
     const bastion = new BastionHostLinux(this, 'BastionHost', {
       vpc,
       availabilityZone,
-      instanceName,
+      instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
@@ -78,8 +78,8 @@ export class TailscaleBastion extends Construct {
     const splitIp = Fn.split('.', splitAddress, 4);
     const dnsServer = `${splitIp[0]}.${splitIp[1]}.${splitIp[2]}.2`;
 
-    new CfnOutput(this, 'Vpc-Dns', { exportName: 'TailscaleDnsNameserver', value: dnsServer });
-    new CfnOutput(this, 'Vpc-Dns-Domain', { exportName: 'TailscaleDnsDomain', value: 'compute.internal' });
+    new CfnOutput(this, 'Vpc-Dns-Nameserver', { value: dnsServer });
+    new CfnOutput(this, 'Vpc-Dns-Domain', { value: 'compute.internal' });
 
     this.bastion = bastion;
 

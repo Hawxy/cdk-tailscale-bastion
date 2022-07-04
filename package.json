@@ -74,7 +74,8 @@
     "aws",
     "bastion",
     "cdk",
-    "tailscale"
+    "tailscale",
+    "vpc"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
