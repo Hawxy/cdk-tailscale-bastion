@@ -4,6 +4,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'Hawxy@users.noreply.github.com',
   cdkVersion: '2.20.0',
   constructsVersion: '10.1.0',
+  majorVersion: 1,
   defaultReleaseBranch: 'main',
   name: 'cdk-tailscale-bastion',
   repositoryUrl: 'https://github.com/Hawxy/cdk-tailscale-bastion.git',
