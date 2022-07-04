@@ -1,6 +1,7 @@
 import { App, Stack } from 'aws-cdk-lib';
 import { Match, Template } from 'aws-cdk-lib/assertions';
 import { Vpc } from 'aws-cdk-lib/aws-ec2';
+import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { TailscaleBastion } from '../src';
 
 const mockApp = new App();
@@ -9,9 +10,11 @@ const stack = new Stack(mockApp, 'MyStack');
 
 const vpc = new Vpc(stack, 'MyVpc');
 
+const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
+
 new TailscaleBastion(stack, 'Test-Bastion', {
   vpc: vpc,
-  tailScaleAuthKey: 'tsauth-12345',
+  tailScaleAuthKey: secret,
 });
 
 const template = Template.fromStack(stack);
@@ -61,7 +64,19 @@ test('Bastion host should be created', () => {
                 'Fn::Join': [
                   '',
                   [
-                    'tailscale up --authkey tsauth-12345 --advertise-routes=',
+                    'tailscale up --authkey {{resolve:secretsmanager:arn:',
+                    {
+                      Ref: 'AWS::Partition',
+                    },
+                    ':secretsmanager:',
+                    {
+                      Ref: 'AWS::Region',
+                    },
+                    ':',
+                    {
+                      Ref: 'AWS::AccountId',
+                    },
+                    ':secret:tailscale:SecretString:AUTH_KEY::}} --advertise-routes=',
                     {
                       'Fn::GetAtt': [
                         Match.stringLikeRegexp('MyVpc'),
@@ -72,6 +87,7 @@ test('Bastion host should be created', () => {
                   ],
                 ],
               },
+
             },
           },
         },
