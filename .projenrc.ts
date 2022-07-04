@@ -16,6 +16,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'cdk',
     'bastion',
     'tailscale',
+    'vpc',
   ],
   // remove in future version of projen
   bundledDeps: ['@types/jest@27.4.1'],
