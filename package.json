@@ -1,5 +1,6 @@
 {
   "name": "aws-cdk-tailscale-bastion",
+  "description": "Deploys a AWS Bastion Host preconfigured for Tailscale access",
   "repository": {
     "type": "git",
     "url": "https://github.com/Hawxy/aws-cdk-tailscale-bastion.git"
@@ -39,8 +40,8 @@
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "aws-cdk-lib": "2.1.0",
-    "constructs": "10.0.5",
+    "aws-cdk-lib": "2.20.0",
+    "constructs": "10.1.0",
     "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^3.2.0",
@@ -59,11 +60,20 @@
     "typescript": "^4.7.4"
   },
   "peerDependencies": {
-    "aws-cdk-lib": "^2.1.0",
-    "constructs": "^10.0.5"
+    "aws-cdk-lib": "^2.20.0",
+    "constructs": "^10.1.0"
   },
+  "dependencies": {
+    "@types/jest": "27.4.1"
+  },
+  "bundledDependencies": [
+    "@types/jest"
+  ],
   "keywords": [
-    "cdk"
+    "aws",
+    "bastion",
+    "cdk",
+    "tailscale"
   ],
   "main": "lib/index.js",
   "license": "Apache-2.0",
@@ -71,7 +81,8 @@
   "jest": {
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-      "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)"
+      "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
+      "**/?(*.)@(spec|test).[tj]s?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
@@ -109,7 +120,7 @@
     }
   },
   "types": "lib/index.d.ts",
-  "stability": "stable",
+  "stability": "experimental",
   "jsii": {
     "outdir": "dist",
     "targets": {},
