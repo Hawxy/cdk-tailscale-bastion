@@ -11,7 +11,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description: 'Deploys a AWS Bastion Host preconfigured for Tailscale access',
   projenrcTs: true,
   license: 'Apache-2.0',
-  stability: 'experimental',
+  stability: 'stable',
   keywords: [
     'aws',
     'cdk',
@@ -19,8 +19,9 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'tailscale',
     'vpc',
   ],
-  // remove in future version of projen
-  bundledDeps: ['@types/jest@27.4.1'],
+  jestOptions: {
+    jestVersion: '^27.0.0', // https://github.com/aws/jsii/issues/3619#issuecomment-1169686716
+  },
 });
 // remove in future version of projen
 project.jest!.addTestMatch('**/?(*.)@(spec|test).[tj]s?(x)');

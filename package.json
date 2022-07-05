@@ -36,7 +36,7 @@
     "organization": false
   },
   "devDependencies": {
-    "@types/jest": "^28.1.4",
+    "@types/jest": "^27.0.0",
     "@types/node": "^14",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
@@ -46,7 +46,7 @@
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^3.2.0",
     "eslint-plugin-import": "^2.26.0",
-    "jest": "^28.1.2",
+    "jest": "^27.0.0",
     "jest-junit": "^13",
     "jsii": "^1.61.0",
     "jsii-diff": "^1.61.0",
@@ -56,7 +56,7 @@
     "npm-check-updates": "^12",
     "projen": "^0.58.21",
     "standard-version": "^9",
-    "ts-jest": "^28.0.5",
+    "ts-jest": "^27.0.0",
     "ts-node": "^10.8.2",
     "typescript": "^4.7.4"
   },
@@ -64,12 +64,6 @@
     "aws-cdk-lib": "^2.20.0",
     "constructs": "^10.1.0"
   },
-  "dependencies": {
-    "@types/jest": "27.4.1"
-  },
-  "bundledDependencies": [
-    "@types/jest"
-  ],
   "keywords": [
     "aws",
     "bastion",
@@ -122,7 +116,7 @@
     }
   },
   "types": "lib/index.d.ts",
-  "stability": "experimental",
+  "stability": "stable",
   "jsii": {
     "outdir": "dist",
     "targets": {},
