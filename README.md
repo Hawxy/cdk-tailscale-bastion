@@ -1,12 +1,15 @@
 # cdk-tailscale-bastion
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Hawxy/cdk-tailscale-bastion/release?label=Build%20%26%20Release&style=flat-square)
+[![npm](https://img.shields.io/npm/v/cdk-tailscale-bastion?style=flat-square)](https://www.npmjs.com/package/cdk-tailscale-bastion)
+
 This packages creates an AWS Bastion configured for Tailscale. This covers steps 1,2 & 4 of the [Tailscale RDS guide](https://tailscale.com/kb/1141/aws-rds/).
 
 You may find this package useful if you need high performance access to internal resources (ie RDS) without the overhead & limitations of Session Manager.
 
 ## Installation
 
-`npm i cdk-tailscation-bastion -D`
+`npm i cdk-tailscale-bastion -D`
 
 ## Instructions
 
@@ -26,7 +29,7 @@ new TailscaleBastion(stack, 'Sample-Bastion', {
 });
 ```
 
-Whatever resource your intend to reach should permit connections from the bastion on the relevant port, naturally. 
+Whatever resource you intend to reach should permit connections from the bastion on the relevant port, naturally. 
 
 ## Tailscale Auth Key
 
