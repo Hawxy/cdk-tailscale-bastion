@@ -881,7 +881,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@^27.0.0":
+"@types/jest@^27":
   version "27.5.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-27.5.2.tgz#ec49d29d926500ffb9fd22b84262e862049c026c"
   integrity sha512-mpT8LJJ4CMeeahobofYWIjFo0xonRS/HfxnVEPMPFSQdGUt1uHCnoPT7Zhb+sjDU2wz0oKV0OLUR0WzrHNgfeA==
@@ -936,7 +936,7 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.6.0.tgz#efcbd41937f9ae7434c714ab698604822d890759"
   integrity sha512-G/AdOadiZhnJp0jXCaBQU449W2h716OW/EoXeYkCytxKL06X1WCXB4DZpp8TpZ8eyIJVS1cw4lrlkkSYU21cDw==
 
-"@types/responselike@*", "@types/responselike@1.0.0", "@types/responselike@^1.0.0":
+"@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/responselike/-/responselike-1.0.0.tgz#251f4fe7d154d2bad125abe1b429b23afd262e29"
   integrity sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==
@@ -2913,7 +2913,7 @@ globrex@^0.1.2:
   resolved "https://registry.yarnpkg.com/globrex/-/globrex-0.1.2.tgz#dd5d9ec826232730cd6793a5e33a9302985e6098"
   integrity sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==
 
-got@12.3.1, got@^12.1.0:
+got@^12.1.0:
   version "12.3.1"
   resolved "https://registry.yarnpkg.com/got/-/got-12.3.1.tgz#79d6ebc0cb8358c424165698ddb828be56e74684"
   integrity sha512-tS6+JMhBh4iXMSXF6KkIsRxmloPln31QHDlcb6Ec3bzxjjFJFr/8aXdpyuLmVc9I4i2HyBHYw1QU5K1ruUdpkw==
@@ -3847,7 +3847,7 @@ jest-worker@^27.5.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@^27.0.0:
+jest@^27:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/jest/-/jest-27.5.1.tgz#dadf33ba70a779be7a6fc33015843b51494f63fc"
   integrity sha512-Yn0mADZB89zTtjkPJEXwrac3LHudkQMR+Paqa8uxJHCBr9agxztUifWCyiYrjhMPBoUVBjyny0I7XH6ozDr7QQ==
@@ -5931,7 +5931,7 @@ trim-newlines@^3.0.0:
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-3.0.1.tgz#260a5d962d8b752425b32f3a7db0dcacd176c144"
   integrity sha512-c1PTsA3tYrIsLGkJkzHF+w9F2EyxfXGo4UyJc4pFL++FMjnq0HJS69T3M7d//gKrFKwy429bouPescbjecU+Zw==
 
-ts-jest@^27.0.0:
+ts-jest@^27:
   version "27.1.5"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-27.1.5.tgz#0ddf1b163fbaae3d5b7504a1e65c914a95cff297"
   integrity sha512-Xv6jBQPoBEvBq/5i2TeSG9tt/nqkbpcurrEG1b+2yfBrcJelOZF9Ml6dmyMh7bcW9JyFbRYpR5rxROSlBLTZHA==

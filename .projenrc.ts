@@ -19,9 +19,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'tailscale',
     'vpc',
   ],
-  jestOptions: {
-    jestVersion: '^27.0.0', // https://github.com/aws/jsii/issues/3619#issuecomment-1169686716
-  },
 });
 // remove in future version of projen
 project.jest!.addTestMatch('**/?(*.)@(spec|test).[tj]s?(x)');
