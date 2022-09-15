@@ -1,4 +1,5 @@
 import { awscdk } from 'projen';
+import { UpgradeDependenciesSchedule } from 'projen/lib/javascript';
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'JT',
   authorAddress: 'Hawxy@users.noreply.github.com',
@@ -19,9 +20,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'tailscale',
     'vpc',
   ],
-  jestOptions: {
-    jestVersion: '^27.0.0', // https://github.com/aws/jsii/issues/3619#issuecomment-1169686716
-  },
+  depsUpgradeOptions: { workflowOptions: { schedule: UpgradeDependenciesSchedule.WEEKLY } },
 });
 // remove in future version of projen
 project.jest!.addTestMatch('**/?(*.)@(spec|test).[tj]s?(x)');
