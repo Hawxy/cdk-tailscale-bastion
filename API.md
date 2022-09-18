@@ -128,6 +128,51 @@ public readonly bastion: BastionHostLinux;
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### SecretsManagerAuthKey <a name="SecretsManagerAuthKey" id="cdk-tailscale-bastion.SecretsManagerAuthKey"></a>
+
+#### Initializer <a name="Initializer" id="cdk-tailscale-bastion.SecretsManagerAuthKey.Initializer"></a>
+
+```typescript
+import { SecretsManagerAuthKey } from 'cdk-tailscale-bastion'
+
+const secretsManagerAuthKey: SecretsManagerAuthKey = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-tailscale-bastion.SecretsManagerAuthKey.property.key">key</a></code> | <code>string</code> | The key of the auth key value located within the provided secret. |
+| <code><a href="#cdk-tailscale-bastion.SecretsManagerAuthKey.property.secret">secret</a></code> | <code>aws-cdk-lib.aws_secretsmanager.ISecret</code> | Secret manager location where the tailscale auth key is stored. |
+
+---
+
+##### `key`<sup>Required</sup> <a name="key" id="cdk-tailscale-bastion.SecretsManagerAuthKey.property.key"></a>
+
+```typescript
+public readonly key: string;
+```
+
+- *Type:* string
+
+The key of the auth key value located within the provided secret.
+
+---
+
+##### `secret`<sup>Required</sup> <a name="secret" id="cdk-tailscale-bastion.SecretsManagerAuthKey.property.secret"></a>
+
+```typescript
+public readonly secret: ISecret;
+```
+
+- *Type:* aws-cdk-lib.aws_secretsmanager.ISecret
+
+Secret manager location where the tailscale auth key is stored.
+
+Must be in the standard key/value JSON format.
+
+---
+
 ### TailscaleBastionProps <a name="TailscaleBastionProps" id="cdk-tailscale-bastion.TailscaleBastionProps"></a>
 
 #### Initializer <a name="Initializer" id="cdk-tailscale-bastion.TailscaleBastionProps.Initializer"></a>
@@ -142,8 +187,9 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.tailScaleAuthKey">tailScaleAuthKey</a></code> | <code>aws-cdk-lib.SecretValue</code> | Auth key generated from Tailscale. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.tailscaleCredentials">tailscaleCredentials</a></code> | <code><a href="#cdk-tailscale-bastion.TailscaleCredentials">TailscaleCredentials</a></code> | Credential settings for the tailscale auth key. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.Vpc</code> | VPC to launch the instance in. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceName">instanceName</a></code> | <code>string</code> | The name of the instance. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Type of instance to launch. |
@@ -152,17 +198,17 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 
 ---
 
-##### `tailScaleAuthKey`<sup>Required</sup> <a name="tailScaleAuthKey" id="cdk-tailscale-bastion.TailscaleBastionProps.property.tailScaleAuthKey"></a>
+##### `tailscaleCredentials`<sup>Required</sup> <a name="tailscaleCredentials" id="cdk-tailscale-bastion.TailscaleBastionProps.property.tailscaleCredentials"></a>
 
 ```typescript
-public readonly tailScaleAuthKey: SecretValue;
+public readonly tailscaleCredentials: TailscaleCredentials;
 ```
 
-- *Type:* aws-cdk-lib.SecretValue
+- *Type:* <a href="#cdk-tailscale-bastion.TailscaleCredentials">TailscaleCredentials</a>
 
-Auth key generated from Tailscale.
+Credential settings for the tailscale auth key.
 
-Do not store this key with your source code.
+One type must be used.
 Ephemeral keys are recommended.
 
 ---
@@ -176,6 +222,18 @@ public readonly vpc: Vpc;
 - *Type:* aws-cdk-lib.aws_ec2.Vpc
 
 VPC to launch the instance in.
+
+---
+
+##### `additionalInit`<sup>Optional</sup> <a name="additionalInit" id="cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit"></a>
+
+```typescript
+public readonly additionalInit: InitElement[];
+```
+
+- *Type:* aws-cdk-lib.aws_ec2.InitElement[]
+
+Additional cloudformation init actions to perform during startup.
 
 ---
 
@@ -243,6 +301,54 @@ public readonly subnetSelection: SubnetSelection;
 Select the subnets to run the bastion host in.
 
 PUBLIC subnets are used by default to allow for a direct Tailscale connection. DERP nodes will be used in a private subnet.
+
+---
+
+### TailscaleCredentials <a name="TailscaleCredentials" id="cdk-tailscale-bastion.TailscaleCredentials"></a>
+
+#### Initializer <a name="Initializer" id="cdk-tailscale-bastion.TailscaleCredentials.Initializer"></a>
+
+```typescript
+import { TailscaleCredentials } from 'cdk-tailscale-bastion'
+
+const tailscaleCredentials: TailscaleCredentials = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdk-tailscale-bastion.TailscaleCredentials.property.secretsManager">secretsManager</a></code> | <code><a href="#cdk-tailscale-bastion.SecretsManagerAuthKey">SecretsManagerAuthKey</a></code> | Fetches the Auth Key from secrets manager. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleCredentials.property.unsafeString">unsafeString</a></code> | <code>string</code> | Provides an auth key as a plaintext string. |
+
+---
+
+##### `secretsManager`<sup>Optional</sup> <a name="secretsManager" id="cdk-tailscale-bastion.TailscaleCredentials.property.secretsManager"></a>
+
+```typescript
+public readonly secretsManager: SecretsManagerAuthKey;
+```
+
+- *Type:* <a href="#cdk-tailscale-bastion.SecretsManagerAuthKey">SecretsManagerAuthKey</a>
+
+Fetches the Auth Key from secrets manager.
+
+This value will be fetched during bastion startup.
+
+---
+
+##### `unsafeString`<sup>Optional</sup> <a name="unsafeString" id="cdk-tailscale-bastion.TailscaleCredentials.property.unsafeString"></a>
+
+```typescript
+public readonly unsafeString: string;
+```
+
+- *Type:* string
+
+Provides an auth key as a plaintext string.
+
+This option will expose the auth key in your CDK template and should only be used with non-reusable keys.
+Potentially useful for DevOps runbooks and temporary instances.
 
 ---
 

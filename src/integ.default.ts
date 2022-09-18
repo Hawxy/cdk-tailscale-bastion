@@ -9,11 +9,19 @@ const stack = new cdk.Stack(app, 'MyStack');
 const vpc = new Vpc(stack, 'MyVpc');
 
 // Secrets Manager
-const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
+const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale');
+
 // Systems Manager Parameter Store
 //const altSecret = SecretValue.ssmSecure('/tsauth');
 
-new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
+const bastion = new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
   vpc,
-  tailScaleAuthKey: secret,
+  tailscaleCredentials: {
+    secretsManager: {
+      secret: secret,
+      key: 'AUTH_KEY',
+    },
+  },
 });
+
+secret.grantRead(bastion.bastion);

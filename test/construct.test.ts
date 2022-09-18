@@ -10,12 +10,19 @@ const stack = new Stack(mockApp, 'MyStack');
 
 const vpc = new Vpc(stack, 'MyVpc');
 
-const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
+const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale');
 
-new TailscaleBastion(stack, 'Test-Bastion', {
+const bastion = new TailscaleBastion(stack, 'Test-Bastion', {
   vpc: vpc,
-  tailScaleAuthKey: secret,
+  tailscaleCredentials: {
+    secretsManager: {
+      secret: secret,
+      key: 'AUTH_KEY',
+    },
+  },
 });
+
+secret.grantRead(bastion.bastion);
 
 const template = Template.fromStack(stack);
 
@@ -57,14 +64,21 @@ test('Bastion host should be created', () => {
               command: 'yum -y install tailscale',
             },
             '005': {
-              command: 'systemctl enable --now tailscaled',
+              command: 'yum -y install jq',
             },
             '006': {
+              command: 'systemctl enable --now tailscaled',
+            },
+            '007': {
               command: {
                 'Fn::Join': [
                   '',
                   [
-                    'tailscale up --authkey {{resolve:secretsmanager:arn:',
+                    'echo TS_AUTHKEY=$(aws secretsmanager get-secret-value --region ',
+                    {
+                      Ref: 'AWS::Region',
+                    },
+                    ' --secret-id arn:',
                     {
                       Ref: 'AWS::Partition',
                     },
@@ -76,7 +90,17 @@ test('Bastion host should be created', () => {
                     {
                       Ref: 'AWS::AccountId',
                     },
-                    ':secret:tailscale:SecretString:AUTH_KEY::}} --advertise-routes=',
+                    ":secret:tailscale --query SecretString --output text | jq '.\"AUTH_KEY\"') >> /etc/environment",
+                  ],
+                ],
+              },
+            },
+            '008': {
+              command: {
+                'Fn::Join': [
+                  '',
+                  [
+                    'source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=',
                     {
                       'Fn::GetAtt': [
                         Match.stringLikeRegexp('MyVpc'),
@@ -87,7 +111,6 @@ test('Bastion host should be created', () => {
                   ],
                 ],
               },
-
             },
           },
         },

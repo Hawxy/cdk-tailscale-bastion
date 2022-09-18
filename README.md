@@ -13,20 +13,27 @@ You may find this package useful if you need high performance access to internal
 
 ## Instructions
 
-The Tailscale Auth key should be passed in via parameter store or secrets manager and NOT hardcoded in your application. 
+The Tailscale Auth key should be passed in via secrets manager and NOT hardcoded in your application. 
 
 ```typescript
 import { TailscaleBastion } from 'cdk-tailscale-bastion';
 
 // Secrets Manager
 const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
-// Systems Manager Parameter Store
-const altSecret = SecretValue.ssmSecure('/tsauth');
 
-new TailscaleBastion(stack, 'Sample-Bastion', {
+
+const bastion = new TailscaleBastion(stack, 'Sample-Bastion', {
   vpc,
-  tailScaleAuthKey: secret,
+  tailscaleCredentials: {
+    secretsManager: {
+      secret: secret,
+      key: 'AUTH_KEY',
+    },
+  },
 });
+
+// Remember to allow the host to read the secret!
+secret.grantRead(bastion.bastion);
 ```
 
 Whatever resource you intend to reach should permit connections from the bastion on the relevant port, naturally. 
