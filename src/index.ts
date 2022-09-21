@@ -102,6 +102,7 @@ export class TailscaleBastion extends Construct {
         InitCommand.shellCommand(`source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=${props.vpc.vpcCidrBlock} --accept-dns=false`),
         ...(additionalInit ?? []),
       ),
+      initOptions: {},
     });
 
     bastion.connections.allowFromAnyIpv4(Port.udp(41641));
