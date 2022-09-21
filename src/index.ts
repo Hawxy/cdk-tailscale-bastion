@@ -104,6 +104,10 @@ export class TailscaleBastion extends Construct {
       ),
     });
 
+    if (props.tailscaleCredentials.secretsManager) {
+      props.tailscaleCredentials.secretsManager.secret.grantRead(bastion);
+    }
+
     bastion.connections.allowFromAnyIpv4(Port.udp(41641));
     bastion.connections.allowFrom(Peer.anyIpv6(), Port.udp(41641));
 
