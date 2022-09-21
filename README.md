@@ -53,3 +53,17 @@ You'll also need to setup the nameserver. The bastion construct conveniently out
 <img src="https://user-images.githubusercontent.com/975824/177154488-3f3c1d02-35c6-432b-96fc-9dca691ea94c.png" height="250px" />
 
 Given your configuration is correct, a direct connection to your internal resources should now be possible.
+
+## Incoming routes
+
+If you have other subnet routers configured in Tailscale, you can use the `incomingRoutes` property to configure VPC route table entries for all private subnets.
+
+```
+new TailscaleBastion(stack, 'Sample-Bastion', {
+  vpc,
+  tailscaleCredentials: ...
+  incomingRoutes: [
+    '192.168.1.0/24',
+  ],
+});
+```
