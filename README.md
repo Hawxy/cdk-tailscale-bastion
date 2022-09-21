@@ -21,7 +21,6 @@ import { TailscaleBastion } from 'cdk-tailscale-bastion';
 // Secrets Manager
 const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
 
-
 const bastion = new TailscaleBastion(stack, 'Sample-Bastion', {
   vpc,
   tailscaleCredentials: {
@@ -32,8 +31,6 @@ const bastion = new TailscaleBastion(stack, 'Sample-Bastion', {
   },
 });
 
-// Remember to allow the host to read the secret!
-secret.grantRead(bastion.bastion);
 ```
 
 Whatever resource you intend to reach should permit connections from the bastion on the relevant port, naturally. 
