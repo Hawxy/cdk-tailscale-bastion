@@ -191,6 +191,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.Vpc</code> | VPC to launch the instance in. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.incomingRoutes">incomingRoutes</a></code> | <code>string[]</code> | List of incoming routes from Tailscale network. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceName">instanceName</a></code> | <code>string</code> | The name of the instance. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Type of instance to launch. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.securityGroup">securityGroup</a></code> | <code>aws-cdk-lib.aws_ec2.ISecurityGroup</code> | Security Group to assign to this instance. |
@@ -247,6 +248,21 @@ public readonly availabilityZone: string;
 - *Default:* Random zone.
 
 In which AZ to place the instance within the VPC.
+
+---
+
+##### `incomingRoutes`<sup>Optional</sup> <a name="incomingRoutes" id="cdk-tailscale-bastion.TailscaleBastionProps.property.incomingRoutes"></a>
+
+```typescript
+public readonly incomingRoutes: string[];
+```
+
+- *Type:* string[]
+- *Default:* none
+
+List of incoming routes from Tailscale network.
+
+VPC route table will get these targets added.
 
 ---
 

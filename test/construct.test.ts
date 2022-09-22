@@ -105,7 +105,7 @@ test('Bastion host should be created', () => {
                         'CidrBlock',
                       ],
                     },
-                    ' --accept-dns=false',
+                    ' --accept-routes --accept-dns=false',
                   ],
                 ],
               },
