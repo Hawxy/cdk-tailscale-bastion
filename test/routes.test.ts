@@ -41,7 +41,7 @@ test('Bastion host should have routing set up', () => {
     InstanceId: {
       Ref: Match.stringLikeRegexp('BastionHost'),
     },
-  })
+  });
 
 });
 
