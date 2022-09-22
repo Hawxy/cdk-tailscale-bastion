@@ -14,7 +14,7 @@ const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale');
 // Systems Manager Parameter Store
 //const altSecret = SecretValue.ssmSecure('/tsauth');
 
-const bastion = new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
+new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
   vpc,
   tailscaleCredentials: {
     secretsManager: {
@@ -23,5 +23,3 @@ const bastion = new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
     },
   },
 });
-
-secret.grantRead(bastion.bastion);

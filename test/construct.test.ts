@@ -12,7 +12,7 @@ const vpc = new Vpc(stack, 'MyVpc');
 
 const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale');
 
-const bastion = new TailscaleBastion(stack, 'Test-Bastion', {
+new TailscaleBastion(stack, 'Test-Bastion', {
   vpc: vpc,
   tailscaleCredentials: {
     secretsManager: {
@@ -21,8 +21,6 @@ const bastion = new TailscaleBastion(stack, 'Test-Bastion', {
     },
   },
 });
-
-secret.grantRead(bastion.bastion);
 
 const template = Template.fromStack(stack);
 
