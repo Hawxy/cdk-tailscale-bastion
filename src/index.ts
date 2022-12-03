@@ -79,7 +79,7 @@ export interface TailscaleBastionProps {
    */
   readonly incomingRoutes?: string[];
   /**
-   * Advertise a custom route instead of using the CIDR, used for Tailscale 4via6 support.
+   * Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support.
    */
   readonly advertiseRoute?: string;
 }
