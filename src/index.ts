@@ -1,4 +1,4 @@
-import { CfnOutput, Fn } from 'aws-cdk-lib';
+import { CfnOutput, Fn, Stack, Token } from 'aws-cdk-lib';
 import { BastionHostLinux, CloudFormationInit, InitCommand, ISecurityGroup, Peer, Port, SubnetSelection, Vpc, InstanceType, SubnetType, InitElement, CfnRoute } from 'aws-cdk-lib/aws-ec2';
 import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
@@ -78,6 +78,10 @@ export interface TailscaleBastionProps {
    * @default none
    */
   readonly incomingRoutes?: string[];
+  /**
+   * Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support.
+   */
+  readonly advertiseRoute?: string;
 }
 
 export class TailscaleBastion extends Construct {
@@ -95,6 +99,7 @@ export class TailscaleBastion extends Construct {
       instanceType,
       additionalInit,
       incomingRoutes,
+      advertiseRoute,
     } = props;
 
     const authKeyCommand = this.computeTsKeyCli(tailscaleCredentials);
@@ -115,14 +120,14 @@ export class TailscaleBastion extends Construct {
         InitCommand.shellCommand('yum -y install jq'),
         InitCommand.shellCommand('systemctl enable --now tailscaled'),
         InitCommand.shellCommand(`echo TS_AUTHKEY=${authKeyCommand} >> /etc/environment`),
-        InitCommand.shellCommand(`source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=${props.vpc.vpcCidrBlock} --accept-routes --accept-dns=false`),
+        InitCommand.shellCommand(`source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=${advertiseRoute ?? vpc.vpcCidrBlock} --accept-routes --accept-dns=false`),
         ...(additionalInit ?? []),
       ),
       initOptions: {},
     });
 
-    if (props.tailscaleCredentials.secretsManager) {
-      props.tailscaleCredentials.secretsManager.secret.grantRead(bastion);
+    if (tailscaleCredentials.secretsManager) {
+      tailscaleCredentials.secretsManager.secret.grantRead(bastion);
     }
 
     bastion.connections.allowFromAnyIpv4(Port.udp(41641));
@@ -133,7 +138,11 @@ export class TailscaleBastion extends Construct {
     const dnsServer = `${splitIp[0]}.${splitIp[1]}.${splitIp[2]}.2`;
 
     new CfnOutput(this, 'Vpc-Dns-Nameserver', { value: dnsServer });
-    new CfnOutput(this, 'Vpc-Dns-Domain', { value: 'compute.internal' });
+
+    const stack = Stack.of(this);
+    const domain = Token.isUnresolved(stack.region) ? 'compute.internal' : `${stack.region}.compute.internal`;
+
+    new CfnOutput(this, 'Vpc-Dns-Domain', { value: domain });
 
     for (const incomingRoute of incomingRoutes ?? []) {
       for (const subnet of vpc.privateSubnets) {

@@ -23,6 +23,7 @@ const bastion = new TailscaleBastion(stack, 'Test-Bastion', {
   incomingRoutes: [
     '192.168.1.0/24',
   ],
+  advertiseRoute: 'fd7a:115c:a1e0:b1a:0:7:a01:100/120',
 });
 
 secret.grantRead(bastion.bastion);
@@ -40,6 +41,20 @@ test('Bastion host should have routing set up', () => {
     DestinationCidrBlock: '192.168.1.0/24',
     InstanceId: {
       Ref: Match.stringLikeRegexp('BastionHost'),
+    },
+  });
+
+  template.hasResource('AWS::EC2::Instance', {
+    Metadata: {
+      'AWS::CloudFormation::Init': {
+        config: {
+          commands: {
+            '008': {
+              command: 'source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=fd7a:115c:a1e0:b1a:0:7:a01:100/120 --accept-routes --accept-dns=false',
+            },
+          },
+        },
+      },
     },
   });
 
