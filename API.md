@@ -190,6 +190,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.tailscaleCredentials">tailscaleCredentials</a></code> | <code><a href="#cdk-tailscale-bastion.TailscaleCredentials">TailscaleCredentials</a></code> | Credential settings for the tailscale auth key. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.Vpc</code> | VPC to launch the instance in. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute">advertiseRoute</a></code> | <code>string</code> | Advertise a custom route instead of using the CIDR, used for Tailscale 4via6 support. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.incomingRoutes">incomingRoutes</a></code> | <code>string[]</code> | List of incoming routes from Tailscale network. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceName">instanceName</a></code> | <code>string</code> | The name of the instance. |
@@ -235,6 +236,18 @@ public readonly additionalInit: InitElement[];
 - *Type:* aws-cdk-lib.aws_ec2.InitElement[]
 
 Additional cloudformation init actions to perform during startup.
+
+---
+
+##### `advertiseRoute`<sup>Optional</sup> <a name="advertiseRoute" id="cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute"></a>
+
+```typescript
+public readonly advertiseRoute: string;
+```
+
+- *Type:* string
+
+Advertise a custom route instead of using the CIDR, used for Tailscale 4via6 support.
 
 ---
 
