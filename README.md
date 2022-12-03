@@ -19,7 +19,7 @@ The Tailscale Auth key should be passed in via secrets manager and NOT hardcoded
 import { TailscaleBastion } from 'cdk-tailscale-bastion';
 
 // Secrets Manager
-const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale').secretValueFromJson('AUTH_KEY');
+const secret = Secret.fromSecretNameV2(stack, 'ApiSecrets', 'tailscale');
 
 const bastion = new TailscaleBastion(stack, 'Sample-Bastion', {
   vpc,
@@ -51,14 +51,27 @@ You'll also need to setup the nameserver. The bastion construct conveniently out
 
 Given your configuration is correct, a direct connection to your internal resources should now be possible.
 
+
+## 4via6 Support
+
+If you wish to use [4via6 subnet routers](https://tailscale.com/kb/1201/4via6-subnets/), you can pass the IPv6 address via the `advertiseRoute` property:
+
+```ts
+new TailscaleBastion(stack, 'Cdk-Sample-Lib', {
+  vpc,
+  tailscaleCredentials: ...,
+  advertiseRoute: 'fd7a:115c:a1e0:b1a:0:7:a01:100/120',
+});
+```
+
 ## Incoming routes
 
 If you have other subnet routers configured in Tailscale, you can use the `incomingRoutes` property to configure VPC route table entries for all private subnets.
 
-```
+```ts
 new TailscaleBastion(stack, 'Sample-Bastion', {
   vpc,
-  tailscaleCredentials: ...
+  tailscaleCredentials: ...,
   incomingRoutes: [
     '192.168.1.0/24',
   ],

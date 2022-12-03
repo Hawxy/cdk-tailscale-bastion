@@ -5,8 +5,8 @@ import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { TailscaleBastion } from '../src';
 
 const mockApp = new App();
-
-const stack = new Stack(mockApp, 'MyStack');
+const env = { region: 'ap-southeast-2' };
+const stack = new Stack(mockApp, 'MyStack', { env });
 
 const vpc = new Vpc(stack, 'MyVpc');
 
@@ -72,19 +72,11 @@ test('Bastion host should be created', () => {
                 'Fn::Join': [
                   '',
                   [
-                    'echo TS_AUTHKEY=$(aws secretsmanager get-secret-value --region ',
-                    {
-                      Ref: 'AWS::Region',
-                    },
-                    ' --secret-id arn:',
+                    'echo TS_AUTHKEY=$(aws secretsmanager get-secret-value --region ap-southeast-2 --secret-id arn:',
                     {
                       Ref: 'AWS::Partition',
                     },
-                    ':secretsmanager:',
-                    {
-                      Ref: 'AWS::Region',
-                    },
-                    ':',
+                    ':secretsmanager:ap-southeast-2:',
                     {
                       Ref: 'AWS::AccountId',
                     },
@@ -114,6 +106,10 @@ test('Bastion host should be created', () => {
         },
       },
     },
+  });
+
+  template.hasOutput('*', {
+    Value: 'ap-southeast-2.compute.internal',
   });
 });
 
