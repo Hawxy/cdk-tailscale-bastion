@@ -12,8 +12,8 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description: 'Deploys a AWS Bastion Host preconfigured for Tailscale access',
   projenrcTs: true,
   publishToNuget: {
-    packageId: 'Cdk.Tailscale.Bastion',
-    dotNetNamespace: 'Cdk.Tailscale.Bastion',
+    packageId: 'CDK.Tailscale.Bastion',
+    dotNetNamespace: 'CDK.Tailscale.Bastion',
   },
   license: 'Apache-2.0',
   stability: 'stable',

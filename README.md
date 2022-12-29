@@ -9,7 +9,9 @@ You may find this package useful if you need high performance access to internal
 
 ## Installation
 
-`npm i cdk-tailscale-bastion -D`
+JS/TS: `npm i cdk-tailscale-bastion -D`
+
+C#: `dotnet add package CDK.Tailscale.Bastion`
 
 ## Instructions
 
