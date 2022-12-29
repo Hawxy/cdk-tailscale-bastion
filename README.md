@@ -1,6 +1,6 @@
 # cdk-tailscale-bastion
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/Hawxy/cdk-tailscale-bastion/release?label=Build%20%26%20Release&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Hawxy/cdk-tailscale-bastion/build.yml?label=Build%20%26%20Release&style=flat-square)
 [![npm](https://img.shields.io/npm/v/cdk-tailscale-bastion?style=flat-square)](https://www.npmjs.com/package/cdk-tailscale-bastion)
 
 This packages creates an AWS Bastion configured for Tailscale. This covers steps 1,2 & 4 of the [Tailscale RDS guide](https://tailscale.com/kb/1141/aws-rds/).
