@@ -121,8 +121,8 @@
     "outdir": "dist",
     "targets": {
       "dotnet": {
-        "namespace": "Cdk.Tailscale.Bastion",
-        "packageId": "Cdk.Tailscale.Bastion"
+        "namespace": "CDK.Tailscale.Bastion",
+        "packageId": "CDK.Tailscale.Bastion"
       }
     },
     "tsc": {
