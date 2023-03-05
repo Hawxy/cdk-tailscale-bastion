@@ -2,10 +2,11 @@
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Hawxy/cdk-tailscale-bastion/build.yml?label=Build%20%26%20Release&style=flat-square)
 [![npm](https://img.shields.io/npm/v/cdk-tailscale-bastion?style=flat-square)](https://www.npmjs.com/package/cdk-tailscale-bastion)
+[![Nuget](https://img.shields.io/nuget/v/CDK.Tailscale.Bastion?style=flat-square)](https://www.nuget.org/packages/CDK.Tailscale.Bastion/)
 
-This packages creates an AWS Bastion configured for Tailscale. This covers steps 1,2 & 4 of the [Tailscale RDS guide](https://tailscale.com/kb/1141/aws-rds/).
+This packages creates an AWS EC2 (Bastion) configured for Tailscale. This covers the [Tailscale AWS VPC guide](https://tailscale.com/kb/1021/install-aws/) as well as most of the [Tailscale RDS guide](https://tailscale.com/kb/1141/aws-rds/).
 
-You may find this package useful if you need high performance access to internal resources (ie RDS) without the overhead & limitations of Session Manager.
+Using Tailscale to access your VPC permits high performance connectivity whilst avoiding SSH or the overhead & limitations of Session Manager.
 
 ## Installation
 
