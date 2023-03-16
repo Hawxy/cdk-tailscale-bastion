@@ -1,5 +1,5 @@
 import { CfnOutput, Fn, Stack, Token } from 'aws-cdk-lib';
-import { BastionHostLinux, CloudFormationInit, InitCommand, ISecurityGroup, Peer, Port, SubnetSelection, Vpc, InstanceType, SubnetType, InitElement, CfnRoute } from 'aws-cdk-lib/aws-ec2';
+import { BastionHostLinux, CloudFormationInit, InitCommand, ISecurityGroup, Peer, Port, SubnetSelection, IVpc, InstanceType, SubnetType, InitElement, CfnRoute } from 'aws-cdk-lib/aws-ec2';
 import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 
@@ -31,7 +31,7 @@ export interface TailscaleBastionProps {
   /**
     * VPC to launch the instance in.
     */
-  readonly vpc: Vpc;
+  readonly vpc: IVpc;
   /**
    * Credential settings for the tailscale auth key. One type must be used.
    * Ephemeral keys are recommended.
