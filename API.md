@@ -188,7 +188,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.tailscaleCredentials">tailscaleCredentials</a></code> | <code><a href="#cdk-tailscale-bastion.TailscaleCredentials">TailscaleCredentials</a></code> | Credential settings for the tailscale auth key. |
-| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.Vpc</code> | VPC to launch the instance in. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.IVpc</code> | VPC to launch the instance in. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute">advertiseRoute</a></code> | <code>string</code> | Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
@@ -218,10 +218,10 @@ Ephemeral keys are recommended.
 ##### `vpc`<sup>Required</sup> <a name="vpc" id="cdk-tailscale-bastion.TailscaleBastionProps.property.vpc"></a>
 
 ```typescript
-public readonly vpc: Vpc;
+public readonly vpc: IVpc;
 ```
 
-- *Type:* aws-cdk-lib.aws_ec2.Vpc
+- *Type:* aws-cdk-lib.aws_ec2.IVpc
 
 VPC to launch the instance in.
 
