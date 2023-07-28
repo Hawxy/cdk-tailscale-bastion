@@ -56,18 +56,27 @@ test('Bastion host should be created', () => {
               command: 'sudo sysctl -p /etc/sysctl.conf',
             },
             '003': {
-              command: 'yum-config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2/tailscale.repo',
+              command: 'mkdir -p /etc/systemd/resolved.conf.d',
             },
             '004': {
-              command: 'yum -y install tailscale',
+              command: 'ln -sf /dev/null /etc/systemd/resolved.conf.d/resolved-disable-stub-listener.conf',
             },
             '005': {
-              command: 'yum -y install jq',
+              command: 'ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf',
             },
             '006': {
-              command: 'systemctl enable --now tailscaled',
+              command: 'dnf config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2023/tailscale.repo',
             },
             '007': {
+              command: 'dnf -y install tailscale',
+            },
+            '008': {
+              command: 'dnf -y install jq',
+            },
+            '009': {
+              command: 'systemctl enable --now tailscaled',
+            },
+            '010': {
               command: {
                 'Fn::Join': [
                   '',
@@ -85,7 +94,7 @@ test('Bastion host should be created', () => {
                 ],
               },
             },
-            '008': {
+            '011': {
               command: {
                 'Fn::Join': [
                   '',
