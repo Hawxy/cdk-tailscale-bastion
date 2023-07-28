@@ -1,5 +1,5 @@
 import { CfnOutput, Fn, Stack, Token } from 'aws-cdk-lib';
-import { BastionHostLinux, CloudFormationInit, InitCommand, ISecurityGroup, Peer, Port, SubnetSelection, IVpc, InstanceType, SubnetType, InitElement, CfnRoute } from 'aws-cdk-lib/aws-ec2';
+import { BastionHostLinux, CloudFormationInit, InitCommand, ISecurityGroup, Peer, Port, SubnetSelection, IVpc, InstanceType, SubnetType, InitElement, CfnRoute, MachineImage } from 'aws-cdk-lib/aws-ec2';
 import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
 import { Construct } from 'constructs';
 
@@ -110,14 +110,23 @@ export class TailscaleBastion extends Construct {
       instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
+      machineImage: MachineImage.latestAmazonLinux2023(),
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
       init: CloudFormationInit.fromElements(
+        // Configure IP forwarding
         InitCommand.shellCommand('echo \'net.ipv4.ip_forward = 1\' | sudo tee -a /etc/sysctl.conf'),
         InitCommand.shellCommand('echo \'net.ipv6.conf.all.forwarding = 1\' | sudo tee -a /etc/sysctl.conf'),
         InitCommand.shellCommand('sudo sysctl -p /etc/sysctl.conf'),
-        InitCommand.shellCommand('yum-config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2/tailscale.repo'),
-        InitCommand.shellCommand('yum -y install tailscale'),
-        InitCommand.shellCommand('yum -y install jq'),
+
+        // Configure Amazon Linux 2023 DNS https://github.com/tailscale/tailscale/issues/7816
+        InitCommand.shellCommand('mkdir -p /etc/systemd/resolved.conf.d'),
+        InitCommand.shellCommand('ln -sf /dev/null /etc/systemd/resolved.conf.d/resolved-disable-stub-listener.conf'),
+        InitCommand.shellCommand('ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf'),
+
+        // Install Tailscale
+        InitCommand.shellCommand('dnf config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2023/tailscale.repo'),
+        InitCommand.shellCommand('dnf -y install tailscale'),
+        InitCommand.shellCommand('dnf -y install jq'),
         InitCommand.shellCommand('systemctl enable --now tailscaled'),
         InitCommand.shellCommand(`echo TS_AUTHKEY=${authKeyCommand} >> /etc/environment`),
         InitCommand.shellCommand(`source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=${advertiseRoute ?? vpc.vpcCidrBlock} --accept-routes --accept-dns=false`),
@@ -130,8 +139,8 @@ export class TailscaleBastion extends Construct {
       tailscaleCredentials.secretsManager.secret.grantRead(bastion);
     }
 
-    bastion.connections.allowFromAnyIpv4(Port.udp(41641));
-    bastion.connections.allowFrom(Peer.anyIpv6(), Port.udp(41641));
+    bastion.connections.allowFromAnyIpv4(Port.udp(41641), 'Tailscale IPv4');
+    bastion.connections.allowFrom(Peer.anyIpv6(), Port.udp(41641), 'Tailscale IPv6');
 
     const splitAddress = Fn.split('/', props.vpc.vpcCidrBlock, 2)[0];
     const splitIp = Fn.split('.', splitAddress, 4);

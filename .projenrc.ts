@@ -3,9 +3,10 @@ import { UpgradeDependenciesSchedule } from 'projen/lib/javascript';
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'JT',
   authorAddress: 'Hawxy@users.noreply.github.com',
-  cdkVersion: '2.20.0',
+  cdkVersion: '2.80.0',
   constructsVersion: '10.1.0',
-  majorVersion: 1,
+  jsiiVersion: '~5.0.0',
+  majorVersion: 2,
   defaultReleaseBranch: 'main',
   name: 'cdk-tailscale-bastion',
   repositoryUrl: 'https://github.com/Hawxy/cdk-tailscale-bastion.git',
@@ -24,7 +25,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
     'tailscale',
     'vpc',
   ],
-  depsUpgradeOptions: { workflowOptions: { schedule: UpgradeDependenciesSchedule.WEEKLY } },
+  depsUpgradeOptions: { workflowOptions: { schedule: UpgradeDependenciesSchedule.MONTHLY } },
 });
 // remove in future version of projen
 project.jest!.addTestMatch('**/?(*.)@(spec|test).[tj]s?(x)');
