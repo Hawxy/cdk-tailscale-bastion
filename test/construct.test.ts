@@ -68,15 +68,18 @@ test('Bastion host should be created', () => {
               command: 'dnf config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2023/tailscale.repo',
             },
             '007': {
-              command: 'dnf -y install tailscale',
+              command: 'sleep 10',
             },
             '008': {
               command: 'dnf -y install jq',
             },
             '009': {
-              command: 'systemctl enable --now tailscaled',
+              command: 'dnf -y install tailscale',
             },
             '010': {
+              command: 'systemctl enable --now tailscaled',
+            },
+            '011': {
               command: {
                 'Fn::Join': [
                   '',
@@ -94,7 +97,7 @@ test('Bastion host should be created', () => {
                 ],
               },
             },
-            '011': {
+            '012': {
               command: {
                 'Fn::Join': [
                   '',
