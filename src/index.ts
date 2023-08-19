@@ -1,4 +1,4 @@
-import {CfnOutput, Fn, Stack, Token} from 'aws-cdk-lib';
+import { CfnOutput, Fn, Stack, Token } from 'aws-cdk-lib';
 import {
   AmazonLinuxCpuType,
   BastionHostLinux,
@@ -15,8 +15,8 @@ import {
   SubnetSelection,
   SubnetType,
 } from 'aws-cdk-lib/aws-ec2';
-import {ISecret} from 'aws-cdk-lib/aws-secretsmanager';
-import {Construct} from 'constructs';
+import { ISecret } from 'aws-cdk-lib/aws-secretsmanager';
+import { Construct } from 'constructs';
 
 export interface SecretsManagerAuthKey {
   /**
@@ -84,6 +84,12 @@ export interface TailscaleBastionProps {
    */
   readonly instanceType?: InstanceType;
   /**
+   *  CPU Type of the instance.
+   *
+   *  @default AmazonLinuxCpuType.X86_64
+   */
+  readonly cpuType?: AmazonLinuxCpuType;
+  /**
    * Additional cloudformation init actions to perform during startup.
    */
   readonly additionalInit?: InitElement[];
@@ -97,10 +103,6 @@ export interface TailscaleBastionProps {
    * Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support.
    */
   readonly advertiseRoute?: string;
-  /**
-   *  CPU Type. Default: AmazonLinuxCpuType.X86_64
-   */
-  readonly cpuType?: AmazonLinuxCpuType;
 }
 
 export class TailscaleBastion extends Construct {
@@ -130,7 +132,7 @@ export class TailscaleBastion extends Construct {
       instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
-      machineImage: MachineImage.latestAmazonLinux2023({cpuType: cpuType ?? AmazonLinuxCpuType.X86_64}),
+      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64 }),
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
       init: CloudFormationInit.fromElements(
         // Configure IP forwarding
