@@ -275,6 +275,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute">advertiseRoute</a></code> | <code>string</code> | Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.cpuType">cpuType</a></code> | <code>aws-cdk-lib.aws_ec2.AmazonLinuxCpuType</code> | CPU Type of the instance. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.incomingRoutes">incomingRoutes</a></code> | <code>string[]</code> | List of incoming routes from Tailscale network. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceName">instanceName</a></code> | <code>string</code> | The name of the instance. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceType">instanceType</a></code> | <code>aws-cdk-lib.aws_ec2.InstanceType</code> | Type of instance to launch. |
@@ -344,6 +345,19 @@ public readonly availabilityZone: string;
 - *Default:* Random zone.
 
 In which AZ to place the instance within the VPC.
+
+---
+
+##### `cpuType`<sup>Optional</sup> <a name="cpuType" id="cdk-tailscale-bastion.TailscaleBastionProps.property.cpuType"></a>
+
+```typescript
+public readonly cpuType: AmazonLinuxCpuType;
+```
+
+- *Type:* aws-cdk-lib.aws_ec2.AmazonLinuxCpuType
+- *Default:* AmazonLinuxCpuType.X86_64
+
+CPU Type of the instance.
 
 ---
 
