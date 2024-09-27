@@ -32,7 +32,7 @@ const bastion = new TailscaleBastion(stack, 'Sample-Bastion', {
       key: 'AUTH_KEY',
     },
   },
-});
+}); 
 
 ```
 
