@@ -148,9 +148,7 @@ export class TailscaleBastion extends Construct {
         // Install Tailscale
         InitCommand.shellCommand('dnf config-manager --add-repo https://pkgs.tailscale.com/stable/amazon-linux/2023/tailscale.repo'),
         // Protect against a potential conflict with AWS activity
-        InitCommand.shellCommand('sleep 10'),
-        InitCommand.shellCommand('dnf -y install jq'),
-        InitCommand.shellCommand('dnf -y install tailscale'),
+        InitCommand.shellCommand('until dnf -y install tailscale ; do sleep 10s ; done'),
         InitCommand.shellCommand('systemctl enable --now tailscaled'),
         InitCommand.shellCommand(`echo TS_AUTHKEY=${authKeyCommand} >> /etc/environment`),
         InitCommand.shellCommand(`source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=${advertiseRoute ?? vpc.vpcCidrBlock} --accept-routes --accept-dns=false`),

@@ -49,7 +49,7 @@ test('Bastion host should have routing set up', () => {
       'AWS::CloudFormation::Init': {
         config: {
           commands: {
-            '012': {
+            '010': {
               command: 'source /etc/environment && tailscale up --authkey $TS_AUTHKEY --advertise-routes=fd7a:115c:a1e0:b1a:0:7:a01:100/120 --accept-routes --accept-dns=false',
             },
           },
