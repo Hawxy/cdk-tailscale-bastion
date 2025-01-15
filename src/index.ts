@@ -38,7 +38,7 @@ export interface TailscaleCredentials {
    * Provides an auth key as a plaintext string.
    * This option will expose the auth key in your CDK template and should only be used with non-reusable keys.
    * Potentially useful for DevOps runbooks and temporary instances.
-   * 
+   *
    * The `cachedInContext` configuration option might be relevant to you if you use this parameter.
    */
   readonly unsafeString?: string;
