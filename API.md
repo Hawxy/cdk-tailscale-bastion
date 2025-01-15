@@ -192,6 +192,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute">advertiseRoute</a></code> | <code>string</code> | Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.cachedInContext">cachedInContext</a></code> | <code>boolean</code> | Setting this to true will result in the Amazon Linux AMI being cached in `cdk.context.json` and prevent the instance being replaced when the image is updated. Enable this if you'd like to use non-reusable Tailscale keys, or you'd prefer the instance to remain stable. Keep in mind that the AMI will grow old over time and is it your responsibility to evict it from the context. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.cpuType">cpuType</a></code> | <code>aws-cdk-lib.aws_ec2.AmazonLinuxCpuType</code> | CPU Type of the instance. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.incomingRoutes">incomingRoutes</a></code> | <code>string[]</code> | List of incoming routes from Tailscale network. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.instanceName">instanceName</a></code> | <code>string</code> | The name of the instance. |
@@ -262,6 +263,19 @@ public readonly availabilityZone: string;
 - *Default:* Random zone.
 
 In which AZ to place the instance within the VPC.
+
+---
+
+##### `cachedInContext`<sup>Optional</sup> <a name="cachedInContext" id="cdk-tailscale-bastion.TailscaleBastionProps.property.cachedInContext"></a>
+
+```typescript
+public readonly cachedInContext: boolean;
+```
+
+- *Type:* boolean
+- *Default:* false
+
+Setting this to true will result in the Amazon Linux AMI being cached in `cdk.context.json` and prevent the instance being replaced when the image is updated. Enable this if you'd like to use non-reusable Tailscale keys, or you'd prefer the instance to remain stable. Keep in mind that the AMI will grow old over time and is it your responsibility to evict it from the context.
 
 ---
 
@@ -392,6 +406,8 @@ Provides an auth key as a plaintext string.
 
 This option will expose the auth key in your CDK template and should only be used with non-reusable keys.
 Potentially useful for DevOps runbooks and temporary instances.
+
+The `cachedInContext` configuration option might be relevant to you if you use this parameter.
 
 ---
 

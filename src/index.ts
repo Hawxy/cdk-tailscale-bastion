@@ -38,6 +38,8 @@ export interface TailscaleCredentials {
    * Provides an auth key as a plaintext string.
    * This option will expose the auth key in your CDK template and should only be used with non-reusable keys.
    * Potentially useful for DevOps runbooks and temporary instances.
+   *
+   * The `cachedInContext` configuration option might be relevant to you if you use this parameter.
    */
   readonly unsafeString?: string;
 }
@@ -103,6 +105,14 @@ export interface TailscaleBastionProps {
    * Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support.
    */
   readonly advertiseRoute?: string;
+  /**
+   * Setting this to true will result in the Amazon Linux AMI being cached in `cdk.context.json` and prevent the instance being replaced when the image is updated.
+   * Enable this if you'd like to use non-reusable Tailscale keys, or you'd prefer the instance to remain stable.
+   * Keep in mind that the AMI will grow old over time and is it your responsibility to evict it from the context.
+   *
+   * @default false
+   */
+  readonly cachedInContext?: boolean;
 }
 
 export class TailscaleBastion extends Construct {
@@ -122,6 +132,7 @@ export class TailscaleBastion extends Construct {
       incomingRoutes,
       advertiseRoute,
       cpuType,
+      cachedInContext,
     } = props;
 
     const authKeyCommand = this.computeTsKeyCli(tailscaleCredentials);
@@ -132,7 +143,7 @@ export class TailscaleBastion extends Construct {
       instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
-      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64 }),
+      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, cachedInContext: cachedInContext ?? false }),
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
       init: CloudFormationInit.fromElements(
         // Configure IP forwarding
