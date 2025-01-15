@@ -141,7 +141,7 @@ export class TailscaleBastion extends Construct {
       instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
-      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, cachedInContext: cachedInContext }),
+      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, cachedInContext: cachedInContext ?? false }),
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
       init: CloudFormationInit.fromElements(
         // Configure IP forwarding
