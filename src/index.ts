@@ -144,9 +144,9 @@ export class TailscaleBastion extends Construct {
     } = props;
 
     const authKeyCommand = this.computeTsKeyCli(tailscaleCredentials);
-    const machineImage = ami ?? MachineImage.latestAmazonLinux2023({ 
-      cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, 
-      cachedInContext: cachedInContext ?? false
+    const machineImage = ami ?? MachineImage.latestAmazonLinux2023({
+      cpuType: cpuType ?? AmazonLinuxCpuType.X86_64,
+      cachedInContext: cachedInContext ?? false,
     });
 
     const bastion = new BastionHostLinux(this, 'BastionHost', {

@@ -191,6 +191,7 @@ const tailscaleBastionProps: TailscaleBastionProps = { ... }
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.vpc">vpc</a></code> | <code>aws-cdk-lib.aws_ec2.IVpc</code> | VPC to launch the instance in. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.additionalInit">additionalInit</a></code> | <code>aws-cdk-lib.aws_ec2.InitElement[]</code> | Additional cloudformation init actions to perform during startup. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.advertiseRoute">advertiseRoute</a></code> | <code>string</code> | Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support. |
+| <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.ami">ami</a></code> | <code>aws-cdk-lib.aws_ec2.IMachineImage</code> | If you want to completely opt out of getting the latest Amazon Linux AMI and instead need to specify one yourself, pass it in here. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.availabilityZone">availabilityZone</a></code> | <code>string</code> | In which AZ to place the instance within the VPC. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.cachedInContext">cachedInContext</a></code> | <code>boolean</code> | Setting this to true will result in the Amazon Linux AMI being cached in `cdk.context.json` and prevent the instance being replaced when the image is updated. Enable this if you'd like to use non-reusable Tailscale keys, or you'd prefer the instance to remain stable. Keep in mind that the AMI will grow old over time and is it your responsibility to evict it from the context. |
 | <code><a href="#cdk-tailscale-bastion.TailscaleBastionProps.property.cpuType">cpuType</a></code> | <code>aws-cdk-lib.aws_ec2.AmazonLinuxCpuType</code> | CPU Type of the instance. |
@@ -250,6 +251,20 @@ public readonly advertiseRoute: string;
 - *Type:* string
 
 Advertise a custom route instead of using the VPC CIDR, used for Tailscale 4via6 support.
+
+---
+
+##### `ami`<sup>Optional</sup> <a name="ami" id="cdk-tailscale-bastion.TailscaleBastionProps.property.ami"></a>
+
+```typescript
+public readonly ami: IMachineImage;
+```
+
+- *Type:* aws-cdk-lib.aws_ec2.IMachineImage
+
+If you want to completely opt out of getting the latest Amazon Linux AMI and instead need to specify one yourself, pass it in here.
+
+We'll use the one you specify instead of the default.
 
 ---
 
