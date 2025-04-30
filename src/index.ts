@@ -4,6 +4,7 @@ import {
   BastionHostLinux,
   CfnRoute,
   CloudFormationInit,
+  IMachineImage,
   InitCommand,
   InitElement,
   InstanceType,
@@ -113,6 +114,12 @@ export interface TailscaleBastionProps {
    * @default false
    */
   readonly cachedInContext?: boolean;
+
+  /**
+   * If you want to completely opt out of getting the latest Amazon Linux AMI and instead need to specify one yourself, pass it in here.
+   * We'll use the one you specify instead of the default.
+   */
+  readonly ami?: IMachineImage;
 }
 
 export class TailscaleBastion extends Construct {
@@ -133,9 +140,14 @@ export class TailscaleBastion extends Construct {
       advertiseRoute,
       cpuType,
       cachedInContext,
+      ami,
     } = props;
 
     const authKeyCommand = this.computeTsKeyCli(tailscaleCredentials);
+    const machineImage = ami ?? MachineImage.latestAmazonLinux2023({ 
+      cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, 
+      cachedInContext: cachedInContext ?? false
+    });
 
     const bastion = new BastionHostLinux(this, 'BastionHost', {
       vpc,
@@ -143,7 +155,7 @@ export class TailscaleBastion extends Construct {
       instanceName: instanceName ?? 'BastionHostTailscale',
       securityGroup,
       instanceType,
-      machineImage: MachineImage.latestAmazonLinux2023({ cpuType: cpuType ?? AmazonLinuxCpuType.X86_64, cachedInContext: cachedInContext ?? false }),
+      machineImage,
       subnetSelection: subnetSelection ?? { subnetType: SubnetType.PUBLIC },
       init: CloudFormationInit.fromElements(
         // Configure IP forwarding
